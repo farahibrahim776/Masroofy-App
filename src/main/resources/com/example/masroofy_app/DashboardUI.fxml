@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="900.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.DashboardUI">
+            fx:controller="com.example.masroofy_app.Controller.DashboardController">
 
     <children>
 
