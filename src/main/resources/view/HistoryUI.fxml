@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.masroofy_app.view.HistoryUI"
+            style="-fx-background-color: #f5f5f5;"
+            prefHeight="500" prefWidth="700">
+
+    <VBox spacing="15" alignment="CENTER" layoutX="50" layoutY="30">
+
+        <!-- Title -->
+        <Label text="Expense History"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <!-- Table -->
+        <TableView fx:id="table"
+                   prefWidth="600"
+                   prefHeight="350"
+                   style="-fx-background-color: white;">
+
+            <columns>
+
+                <TableColumn fx:id="colAmount"
+                             text="Amount"
+                             prefWidth="200"/>
+
+                <TableColumn fx:id="colDate"
+                             text="Date"
+                             prefWidth="200"/>
+
+            </columns>
+
+        </TableView>
+
+    </VBox>
+
+</AnchorPane>

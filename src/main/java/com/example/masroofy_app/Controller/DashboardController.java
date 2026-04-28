@@ -8,9 +8,15 @@ import com.example.masroofy_app.service.DashboardManager;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 public class DashboardController {
 
@@ -32,19 +38,38 @@ public class DashboardController {
     // ===== Data =====
     private BudgetCycle currentCycle;
     private List<Expense> expenses;
-
+    private List<Category> categories;
     // ===== Initialize =====
     @FXML
     public void initialize() {
-        // ممكن تسيبيها فاضية أو تعملي default UI
+        pieChart.getData().addAll(
+                new PieChart.Data("Food", 50),
+                new PieChart.Data("Transport", 30),
+                new PieChart.Data("Entertainment", 20)
+        );
     }
 
     // ===== Receive Data from App =====
-    public void setData(BudgetCycle cycle, List<Expense> expensesList) {
+    private Map<Integer, String> categoryMap = new HashMap<>();
+
+    public void setData(BudgetCycle cycle, List<Expense> expensesList, List<Category> categoryList) {
         this.currentCycle = cycle;
         this.expenses = expensesList;
+        this.categories = categoryList;
+        categoryMap.clear();
+
+        // Build Map
+        if (categories != null) {
+            for (Category c : categories) {
+                categoryMap.put(c.getId(), c.getName());
+            }
+        }
 
         loadDashboard();
+    }
+
+    private String getCategoryNameById(int id) {
+        return categoryMap.getOrDefault(id, "Unknown");
     }
 
     // ===== Load All Dashboard Data =====
@@ -97,8 +122,16 @@ public class DashboardController {
             float amount = entry.getValue();
 
             pieChart.getData().add(
-                    new PieChart.Data(categoryName, amount)
-            );
+                    new PieChart.Data(categoryName + " (" + amount + ")", amount) );
+        }
+    }
+    public void handleLogExpense(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/views/AddExpense.fxml"));
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

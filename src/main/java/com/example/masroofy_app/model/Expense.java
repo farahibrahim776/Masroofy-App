@@ -42,4 +42,7 @@ public class Expense {
 
     public void delete() {
     }
+    public String getFormattedDate() {
+        return date.toLocalDate().toString();
+    }
 }

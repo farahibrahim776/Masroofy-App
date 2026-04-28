@@ -24,7 +24,7 @@ public class DashboardManager {
             return 0f;
         }
 
-        return getRemainingBalance(cycle) / daysLeft;
+        return Math.round((getRemainingBalance(cycle) / daysLeft) * 100) / 100f;
     }
 
     // PieChart data
