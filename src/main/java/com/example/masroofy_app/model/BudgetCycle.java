@@ -1,6 +1,7 @@
 package com.example.masroofy_app.model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class BudgetCycle {
     private int id;
@@ -50,5 +51,10 @@ public class BudgetCycle {
         LocalDate today = LocalDate.now();
         return (today.isEqual(startDate) || today.isAfter(startDate)) &&
                 (today.isBefore(endDate) || today.isEqual(endDate));
+    }
+
+    public long getRemainingDays() {
+        long days = ChronoUnit.DAYS.between(LocalDate.now(), endDate);
+        return Math.max(days, 0);
     }
 }

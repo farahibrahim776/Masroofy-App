@@ -1,9 +1,10 @@
-package com.example.masroofy_app;
+package com.example.masroofy_app.Controller;
+import com.example.masroofy_app.DB;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import javafx.fxml.FXML;
+
 import javafx.scene.control.Label;
 
 public class HelloController {
