@@ -3,11 +3,14 @@ package com.example.masroofy_app.view;
 import com.example.masroofy_app.model.Expense;
 import com.example.masroofy_app.service.ExpenseManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.time.LocalDate;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 
 public class HistoryUI {
 
@@ -22,12 +25,10 @@ public class HistoryUI {
     @FXML
     public void initialize() {
 
-        // Today
         manager.addExpense(-100, 1, java.time.LocalDateTime.now());
         manager.addExpense(-100, 2, java.time.LocalDateTime.now());
         manager.addExpense(-100, 3, java.time.LocalDateTime.now());
 
-        // Yesterday
         manager.addExpense(-50, 1, java.time.LocalDateTime.now().minusDays(1));
         manager.addExpense(-50, 3, java.time.LocalDateTime.now().minusDays(1));
 
@@ -42,15 +43,14 @@ public class HistoryUI {
             }
         }
     }
+
     private VBox createItem(Expense e) {
 
         HBox row = new HBox(20);
 
-        // amount
         Label amount = new Label(formatAmount(e.getAmount()));
         amount.setStyle(getAmountStyle(e.getAmount()));
 
-        // category
         Label category = new Label(getCategoryName(e.getCategoryId()));
 
         row.getChildren().addAll(amount, category);
@@ -83,5 +83,30 @@ public class HistoryUI {
             case 3 -> "Transportation";
             default -> "Other";
         };
+    }
+
+    // Navigation
+    @FXML
+    private void goToDashboard(javafx.event.ActionEvent event) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/view/DashboardUI.fxml")
+        );
+
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    private void goToStats(javafx.event.ActionEvent event) {
+        System.out.println("Go to Stats");
+    }
+
+    @FXML
+    private void goToSettings(javafx.event.ActionEvent event) {
+        System.out.println("Go to Settings");
     }
 }

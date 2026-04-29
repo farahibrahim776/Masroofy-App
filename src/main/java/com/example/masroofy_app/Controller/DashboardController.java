@@ -134,4 +134,37 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+
+
+    @FXML
+    private void goToDashboard(ActionEvent event) {
+        System.out.println("Already in Dashboard");
+    }
+    @FXML
+    private void goToHistory(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/HistoryUI.fxml")
+            );
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource())
+                    .getScene().getWindow();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void goToStats(javafx.event.ActionEvent event) {
+        System.out.println("Go to Stats");
+    }
+    @FXML
+    private void goToSettings(javafx.event.ActionEvent event) {
+        System.out.println("Go to Settings");
+    }
+
 }
