@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.masroofy_app.view.NewExpenseUI">
+
+    <VBox fx:id="rootBox"
+          spacing="15"
+          alignment="CENTER"
+          maxWidth="400"
+          maxHeight="600">
+
+        <Label text="New Expense" textFill="#000000">
+            <font>
+                <Font size="20"/>
+            </font>
+        </Label>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="X" fx:id="cancelBtn"/>
+
+            <VBox alignment="CENTER">
+                <Label text="Amount"/>
+                <Label fx:id="amountLabel" text="30 EGP" textFill="green">
+                    <font>
+                        <Font size="18"/>
+                    </font>
+                </Label>
+            </VBox>
+
+            <Button text="✓" fx:id="confirmBtn"/>
+        </HBox>
+
+        <Label text="Select Category"/>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Food" fx:id="foodBtn"/>
+            <Button text="Transport" fx:id="transportBtn"/>
+            <Button text="Shopping" fx:id="shoppingBtn"/>
+            <Button text="Other" fx:id="otherBtn"/>
+        </HBox>
+
+        <Button text="Add Category"
+                fx:id="addCategoryBtn"
+                prefWidth="200"/>
+
+    </VBox>
+
+</StackPane>
