@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ExpenseManager {
 
-    private List<Expense> expenses = new ArrayList<>();
+    private static List<Expense> expenses = new ArrayList<>();
 
     // Add Expense
     public void addExpense(double amount, int categoryId) {
@@ -40,5 +40,15 @@ public class ExpenseManager {
     // Get All Expenses
     public List<Expense> getAllExpenses() {
         return expenses;
+    }
+    public void addExpense(double amount, int categoryId, java.time.LocalDateTime date) {
+        expenses.add(
+                new Expense(
+                        expenses.size() + 1,
+                        amount,
+                        date,
+                        categoryId
+                )
+        );
     }
 }

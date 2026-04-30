@@ -3,38 +3,51 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.masroofy_app.view.HistoryUI"
-            style="-fx-background-color: #f5f5f5;"
-            prefHeight="500" prefWidth="700">
+            style="-fx-background-color: #f5f5f5;">
 
-    <VBox spacing="15" alignment="CENTER" layoutX="50" layoutY="30">
+    <!-- CENTER -->
+    <center>
+        <ScrollPane fitToWidth="true">
+            <content>
+                <StackPane>
+                    <VBox spacing="20"
+                          alignment="TOP_CENTER"
+                          maxWidth="500"
+                          style="-fx-padding: 30;">
 
-        <!-- Title -->
-        <Label text="Expense History"
-               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                        <Label text="Expense History"
+                               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-        <!-- Table -->
-        <TableView fx:id="table"
-                   prefWidth="600"
-                   prefHeight="350"
-                   style="-fx-background-color: white;">
+                        <Label text="Today"
+                               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-            <columns>
+                        <VBox fx:id="todayBox" spacing="10"/>
 
-                <TableColumn fx:id="colAmount"
-                             text="Amount"
-                             prefWidth="200"/>
+                        <Label text="Yesterday"
+                               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-                <TableColumn fx:id="colDate"
-                             text="Date"
-                             prefWidth="200"/>
+                        <VBox fx:id="yesterdayBox" spacing="10"/>
 
-            </columns>
+                    </VBox>
+                </StackPane>
+            </content>
+        </ScrollPane>
+    </center>
 
-        </TableView>
+    <!-- BOTTOM NAV -->
+    <bottom>
+        <HBox spacing="20"
+              alignment="CENTER"
+              style="-fx-padding: 12; -fx-background-color: white; -fx-border-color: #ddd;">
 
-    </VBox>
+            <Button text="Dashboard" onAction="#goToDashboard"/>
+            <Button text="Settings" onAction="#openSettings"/>
+            <Button text="Stats" onAction="#goToStats"/>
 
-</AnchorPane>
+        </HBox>
+    </bottom>
+
+</BorderPane>
