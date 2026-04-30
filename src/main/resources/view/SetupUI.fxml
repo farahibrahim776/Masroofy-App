@@ -3,37 +3,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.masroofy_app.view.SetupUI"
-            prefHeight="400.0" prefWidth="600.0">
+            style="-fx-background-color: #f5f5f5;">
 
-    <VBox spacing="15" alignment="CENTER" layoutX="150" layoutY="80">
+    <!-- CENTER -->
+    <center>
+        <StackPane>
+            <VBox spacing="15"
+                  alignment="CENTER"
+                  maxWidth="400"
+                  style="-fx-padding: 30;">
 
-        <Label text="Create Your Budget Cycle" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Label text="Create Budget Cycle"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
-        <!-- Amount -->
-        <VBox spacing="5">
-            <Label text="Enter Amount"/>
-            <TextField fx:id="amountField" promptText="e.g. 1000"/>
-        </VBox>
+                <Label text="Enter Amount"/>
+                <TextField fx:id="amountField" promptText="e.g. 1000"/>
 
-        <!-- Start Date -->
-        <VBox spacing="5">
-            <Label text="Start Date"/>
-            <DatePicker fx:id="startDate"/>
-        </VBox>
+                <Label text="Start Date"/>
+                <DatePicker fx:id="startDate"/>
 
-        <!-- End Date -->
-        <VBox spacing="5">
-            <Label text="End Date"/>
-            <DatePicker fx:id="endDate"/>
-        </VBox>
+                <Label text="End Date"/>
+                <DatePicker fx:id="endDate"/>
 
-        <!-- Button -->
-        <Button text="Start Cycle" onAction="#handleStart"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button text="Start Cycle"
+                        onAction="#handleStart"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
 
-    </VBox>
+            </VBox>
+        </StackPane>
+    </center>
 
-</AnchorPane>
+</BorderPane>

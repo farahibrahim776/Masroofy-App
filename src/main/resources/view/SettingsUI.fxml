@@ -3,58 +3,49 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.masroofy_app.view.SettingsUI"
-            prefWidth="600" prefHeight="500"
             style="-fx-background-color: #f5f5f5;">
 
-    <VBox spacing="15" layoutX="40" layoutY="30" prefWidth="500">
+    <!-- CENTER -->
+    <center>
+        <StackPane>
+            <VBox spacing="15"
+                  alignment="CENTER"
+                  maxWidth="500"
+                  style="-fx-padding: 30;">
 
-        <!-- Title -->
-        <Label text="Settings"
-               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                <Label text="Settings"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-        <!-- Application Settings -->
-        <Label text="Application Settings"
-               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Label text="Application Settings"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-        <Button text="Manage Categories"/>
-        <Button text="Reset Cycle"/>
+                <Button text="Manage Categories"/>
+                <Button text="Reset Cycle"/>
 
-        <!-- Security -->
-        <Label text="Security and Privacy"
-               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Label text="Security and Privacy"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-        <HBox spacing="10">
-            <Label text="Enable Privacy Lock"/>
-            <CheckBox fx:id="privacyCheck"/>
-        </HBox>
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Enable Privacy Lock"/>
+                    <CheckBox fx:id="privacyCheck"/>
+                </HBox>
 
-        <Button text="Change PIN"/>
+                <Button text="Change PIN"/>
 
-        <!-- Info -->
-        <Label text="Information"
-               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Label text="Version: 1.0"/>
+                <Label text="Storage: SQLite Local"/>
 
-        <HBox spacing="10">
-            <Label text="Version:"/>
-            <Label text="1.0"/>
-        </HBox>
+                <Button text="Reset Database"
+                        style="-fx-text-fill: red;"/>
 
-        <HBox spacing="10">
-            <Label text="Storage:"/>
-            <Label text="SQLite Local"/>
-        </HBox>
+                <Button text="Back to History"
+                        onAction="#goBack"/>
 
-        <!-- Reset -->
-        <Button text="Reset Database"
-                style="-fx-text-fill: red; -fx-border-color: red;"/>
+            </VBox>
+        </StackPane>
+    </center>
 
-        <!-- Back -->
-        <Button text="Back to History"
-                onAction="#goBack"/>
-
-    </VBox>
-
-</AnchorPane>
+</BorderPane>

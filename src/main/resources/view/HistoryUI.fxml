@@ -6,40 +6,45 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.masroofy_app.view.HistoryUI"
-            prefWidth="600" prefHeight="500"
             style="-fx-background-color: #f5f5f5;">
 
-    <!-- CENTER CONTENT-->
+    <!-- CENTER -->
     <center>
-        <VBox spacing="20" style="-fx-padding: 30;">
+        <ScrollPane fitToWidth="true">
+            <content>
+                <StackPane>
+                    <VBox spacing="20"
+                          alignment="TOP_CENTER"
+                          maxWidth="500"
+                          style="-fx-padding: 30;">
 
-            <Label text="Expense History"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                        <Label text="Expense History"
+                               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-            <Label text="Today"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Label text="Today"
+                               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-            <VBox fx:id="todayBox" spacing="10"/>
+                        <VBox fx:id="todayBox" spacing="10"/>
 
-            <Label text="Yesterday"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Label text="Yesterday"
+                               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-            <VBox fx:id="yesterdayBox" spacing="10"/>
+                        <VBox fx:id="yesterdayBox" spacing="10"/>
 
-        </VBox>
+                    </VBox>
+                </StackPane>
+            </content>
+        </ScrollPane>
     </center>
 
-    <!-- BOTTOM NAVIGATION -->
+    <!-- BOTTOM NAV -->
     <bottom>
         <HBox spacing="20"
               alignment="CENTER"
               style="-fx-padding: 12; -fx-background-color: white; -fx-border-color: #ddd;">
 
             <Button text="Dashboard" onAction="#goToDashboard"/>
-            <Button text="Settings"
-                    onAction="#openSettings"
-                    style="-fx-font-size: 14px;"/>
-
+            <Button text="Settings" onAction="#openSettings"/>
             <Button text="Stats" onAction="#goToStats"/>
 
         </HBox>
