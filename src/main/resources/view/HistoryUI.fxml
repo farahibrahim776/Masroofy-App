@@ -36,8 +36,11 @@
               style="-fx-padding: 12; -fx-background-color: white; -fx-border-color: #ddd;">
 
             <Button text="Dashboard" onAction="#goToDashboard"/>
+            <Button text="Settings"
+                    onAction="#openSettings"
+                    style="-fx-font-size: 14px;"/>
+
             <Button text="Stats" onAction="#goToStats"/>
-            <Button text="Settings" onAction="#goToSettings"/>
 
         </HBox>
     </bottom>

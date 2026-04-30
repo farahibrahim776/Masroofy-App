@@ -106,7 +106,17 @@ public class HistoryUI {
     }
 
     @FXML
-    private void goToSettings(javafx.event.ActionEvent event) {
-        System.out.println("Go to Settings");
+    public void openSettings() {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/SettingsUI.fxml")
+            );
+
+            Stage stage = (Stage) todayBox.getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
