@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+
+<VBox spacing="25" alignment="TOP_CENTER" style="-fx-padding: 30px;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.masroofy_app.Controller.PinLoginController">
+    <VBox spacing="10" alignment="TOP_CENTER" style="-fx-padding: 30px 0 0 0;">
+        <Label text="Enter a 4-digit PIN" style="-fx-font-size: 18px;"/>
+    </VBox>
+    
+    <TextField fx:id="pinField" maxWidth="250" prefWidth="250" promptText="7184"
+                style="-fx-font-size: 24px;
+                        -fx-alignment: CENTER;
+                        -fx-background-radius: 10px;
+                        -fx-border-radius: 10px;
+                        -fx-border-color: black;
+                        -fx-border-width: 1.5px;
+                        -fx-padding: 10px;"/>
+
+    <!-- Outline Button with rounded borders -->
+    <Button text="UNLOCK" onAction="#unlock" maxWidth="250" prefWidth="250"
+            style="-fx-font-size: 20px;
+                    -fx-font-weight: bold;
+                    -fx-text-fill: black;
+                    -fx-background-color: white;
+                    -fx-background-radius: 10px;
+                    -fx-border-radius: 10px;
+                    -fx-border-color: black;
+                    -fx-border-width: 1.5px;
+                    -fx-padding: 10px;"/>
+</VBox>
