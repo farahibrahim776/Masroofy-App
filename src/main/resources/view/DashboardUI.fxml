@@ -42,7 +42,7 @@
             </StackPane>
 
             <!-- Button -->
-            <Button text="Log Expense"
+            <Button text="Log Expense" onAction="#handleLogExpense"
                     prefWidth="140"
                     style="-fx-background-radius:10;
                            -fx-background-color:white;
@@ -64,13 +64,6 @@
               AnchorPane.leftAnchor="0"
               AnchorPane.rightAnchor="0"
               style="-fx-background-color:white; -fx-padding:10;">
-
-            <Button text="Log Expense"
-                    onAction="#handleLogExpense"
-                    prefWidth="140" />
-
-            <Button text="Dashboard"
-                    onAction="#goToDashboard" />
 
             <Button text="History"
                     onAction="#goToHistory" />

@@ -125,9 +125,10 @@ public class DashboardController {
                     new PieChart.Data(categoryName + " (" + amount + ")", amount) );
         }
     }
+    @FXML
     public void handleLogExpense(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/views/AddExpense.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/NewExpenseUI.fxml"));
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (Exception e) {
@@ -135,12 +136,6 @@ public class DashboardController {
         }
     }
 
-
-
-    @FXML
-    private void goToDashboard(ActionEvent event) {
-        System.out.println("Already in Dashboard");
-    }
     @FXML
     private void goToHistory(ActionEvent event) {
         try {
@@ -159,12 +154,38 @@ public class DashboardController {
         }
     }
     @FXML
-    private void goToStats(javafx.event.ActionEvent event) {
-        System.out.println("Go to Stats");
+    private void goToStats(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/StatsUI.fxml")
+            );
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource())
+                    .getScene().getWindow();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @FXML
-    private void goToSettings(javafx.event.ActionEvent event) {
-        System.out.println("Go to Settings");
+    private void goToSettings(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/SettingsUI.fxml")
+            );
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource())
+                    .getScene().getWindow();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
