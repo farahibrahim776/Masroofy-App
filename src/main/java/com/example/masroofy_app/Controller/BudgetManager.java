@@ -5,26 +5,47 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class BudgetManager {
+    private double amount;
 
-    // US #3: Dynamic Daily Limit View
-    public double calculateSafeDailyLimit(BudgetCycle cycle) {
-        if (cycle == null) return 0.0;
-        
-        long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), cycle.getEndDate());
-        if (daysRemaining <= 0) {
-            return cycle.getRemainingBalance(); // Last day
-        }
-        return cycle.getRemainingBalance() / (daysRemaining + 1); // +1 to include today
+    public BudgetManager(double amount) {
+        this.amount = amount;
     }
 
-    // US #5: Daily Rollover Management
-    public void handleRollover(BudgetCycle cycle) {
-        TimeService timeService = new TimeService();
-        if (timeService.isNewDay(cycle.getLastUpdate())) {
-            // Because the daily limit is dynamically calculated using ChronoUnit.DAYS.between(now, endDate),
-            // the rollover is mathematically automatic. We just need to update the last update timestamp.
-            cycle.setLastUpdate(LocalDate.now());
-            // In a full implementation, you would save this updated date back to SQLite here.
+    public double calculateSafeDailyLimit(BudgetCycle cycle) {
+        if (cycle == null || cycle.getEndDate() == null) {
+            return 0.0f;
         }
+        
+        long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), cycle.getEndDate());
+        
+        if (daysRemaining <= 0) {
+            return cycle.getRemainingBalance();
+        }
+        
+        return cycle.getRemainingBalance() / daysRemaining;
+    }
+
+    public void handleRollover(BudgetCycle cycle) {
+        if (cycle != null) {
+            cycle.calculateDailyLimit();
+            cycle.setLastUpdate(java.time.LocalDate.now());
+        }
+    }
+
+    public void recalculateAfterExpense(BudgetCycle cycle) {
+        if (cycle != null) {
+            cycle.updateRemainingBalance(amount);
+        }
+    }
+
+    public boolean checkNewDay(BudgetCycle cycle) {
+        if (cycle == null || cycle.getLastUpdate() == null) {
+            return true;
+        }
+        
+        LocalDate lastUpdateDate = cycle.getLastUpdate();
+        LocalDate today = LocalDate.now();
+        
+        return !lastUpdateDate.isEqual(today);
     }
 }
