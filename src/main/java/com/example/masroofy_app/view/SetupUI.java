@@ -1,8 +1,7 @@
 package com.example.masroofy_app.view;
 
 import com.example.masroofy_app.model.BudgetCycle;
-import com.example.masroofy_app.model.Expense;
-import com.example.masroofy_app.service.ExpenseManager;
+import com.example.masroofy_app.model.DatabaseHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class SetupUI {
 
@@ -26,7 +24,6 @@ public class SetupUI {
 
     private BudgetCycle cycle;
 
-    private ExpenseManager manager = new ExpenseManager();
 
     // create cycle
     public BudgetCycle inputCycleData(float total, LocalDate start, LocalDate end) {
@@ -58,8 +55,8 @@ public class SetupUI {
                 return;
             }
 
+            DatabaseHelper.getInstance().saveCycle(cycle);
             System.out.println("Cycle Created!");
-
 
             // Navigation
             FXMLLoader loader = new FXMLLoader(
