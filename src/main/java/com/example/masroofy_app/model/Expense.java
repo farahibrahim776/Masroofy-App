@@ -31,6 +31,18 @@ public class Expense {
         return categoryId;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public static Expense create(int id, double amount, int categoryId) {
         return new Expense(id, amount, LocalDateTime.now(), categoryId);
     }
