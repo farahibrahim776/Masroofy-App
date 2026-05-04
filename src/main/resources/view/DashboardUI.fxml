@@ -31,29 +31,30 @@
                         stroke="#bdc3c7" strokeWidth="2"/>
 
                 <VBox alignment="CENTER">
-                    <Label text="Today's Limit"
-                           style="-fx-text-fill:gray; -fx-font-size:14px;"/>
+                        <Label text="Today's Limit" style="-fx-text-fill:gray; -fx-font-size:14px;"/>
 
-                    <Label fx:id="dailyLimitLabel"
-                           text="0 EGP"
-                           style="-fx-text-fill:#27ae60; -fx-font-size:20px; -fx-font-weight:bold;"/>
+                        <Label fx:id="dailyLimitLabel" text="0 EGP" style="-fx-text-fill:#27ae60; -fx-font-size:20px; -fx-font-weight:bold;"/>
+
+                        <Label fx:id="daysLabel" text="0 Days Left" style="-fx-text-fill:gray;"/>
                 </VBox>
 
             </StackPane>
 
             <!-- Button -->
-            <Button text="Log Expense" onAction="#handleLogExpense"
-                    prefWidth="140"
-                    style="-fx-background-radius:10;
-                           -fx-background-color:white;
-                           -fx-border-color:#2c3e50;
-                           -fx-border-radius:10;" />
+            <Button text="Log Expense" onAction="#handleLogExpense" prefWidth="140"
+                        style="-fx-background-radius:10;
+                                -fx-background-color:white;
+                                -fx-border-color:#2c3e50;
+                                -fx-border-radius:10;" />
 
             <!-- Pie Chart -->
             <PieChart fx:id="pieChart"
                       prefWidth="280"
                       prefHeight="200"
                       legendSide="RIGHT" />
+            
+            <Label text="Total Remaining Balance:" style="-fx-font-weight:bold;"/>
+            <Label fx:id="balanceLabel" text="0 EGP" style="-fx-text-fill:#e74c3c; -fx-font-size:18px;"/>
 
         </VBox>
 
