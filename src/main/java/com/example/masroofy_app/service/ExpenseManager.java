@@ -1,54 +1,48 @@
 package com.example.masroofy_app.service;
 
 import com.example.masroofy_app.model.Expense;
-import java.util.ArrayList;
+import com.example.masroofy_app.model.BudgetCycle;
+import com.example.masroofy_app.model.DatabaseHelper;
+import com.example.masroofy_app.Controller.BudgetManager;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ExpenseManager {
 
-    private static List<Expense> expenses = new ArrayList<>();
+    private final BudgetManager budgetManager = new BudgetManager();
 
-    // Add Expense
-    public void addExpense(double amount, int categoryId) {
-        int id = expenses.size() + 1;
+    public void addExpense(BudgetCycle activeCycle, String title, double amount, int categoryId) {
+        if (activeCycle == null) {
+            System.out.println("Error: No active budget cycle found!");
+            return;
+        }
 
         Expense e = new Expense(
-                id,
+                activeCycle.getId(),
                 amount,
-                java.time.LocalDateTime.now(),
+                LocalDateTime.now(),
                 categoryId
         );
 
-        expenses.add(e);
+        DatabaseHelper.getInstance().insertExpense(e, activeCycle.getId(), title);
+
+        budgetManager.recalculateAfterExpense(activeCycle, amount);
     }
 
     // Edit Expense
-    public void editExpense(int id, double amount, int categoryId) {
-        for (Expense e : expenses) {
-            if (e.getId() == id) {
-                e.update(amount, categoryId);
-                return;
-            }
-        }
+    public void editExpense(Expense expense, double newAmount, int newCategoryId) {
+        expense.update(newAmount, newCategoryId);
+        DatabaseHelper.getInstance().updateExpense(expense);
     }
 
     // Delete Expense
-    public void deleteExpense(int id) {
-        expenses.removeIf(e -> e.getId() == id);
+    public void deleteExpense(int expenseId) {
+        DatabaseHelper.getInstance().deleteExpense(expenseId);
     }
 
-    // Get All Expenses
-    public List<Expense> getAllExpenses() {
-        return expenses;
-    }
-    public void addExpense(double amount, int categoryId, java.time.LocalDateTime date) {
-        expenses.add(
-                new Expense(
-                        expenses.size() + 1,
-                        amount,
-                        date,
-                        categoryId
-                )
-        );
+    // Get All Expenses for the active cycle
+    public List<Expense> getAllExpenses(int cycleId) {
+        return DatabaseHelper.getInstance().getExpenses(cycleId);
     }
 }
