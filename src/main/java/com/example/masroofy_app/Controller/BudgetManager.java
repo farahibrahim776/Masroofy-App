@@ -1,40 +1,35 @@
 package com.example.masroofy_app.Controller;
 
 import com.example.masroofy_app.model.BudgetCycle;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import com.example.masroofy_app.model.DatabaseHelper;
 
 public class BudgetManager {
-    private double amount;
 
-    public BudgetManager(double amount) {
-        this.amount = amount;
-    }
+    private final NotificationService notificationService = new NotificationService();
 
     public double calculateSafeDailyLimit(BudgetCycle cycle) {
-        if (cycle == null || cycle.getEndDate() == null) {
-            return 0.0f;
-        }
-        
-        long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), cycle.getEndDate());
-        
-        if (daysRemaining <= 0) {
-            return cycle.getRemainingBalance();
-        }
-        
-        return cycle.getRemainingBalance() / daysRemaining;
+        if (cycle == null) return 0.0f;
+        return cycle.calculateDailyLimit();
     }
 
     public void handleRollover(BudgetCycle cycle) {
         if (cycle != null) {
             cycle.calculateDailyLimit();
             cycle.setLastUpdate(java.time.LocalDate.now());
+            DatabaseHelper.getInstance().saveCycle(cycle);
         }
     }
 
-    public void recalculateAfterExpense(BudgetCycle cycle) {
+    public void recalculateAfterExpense(BudgetCycle cycle, double expenseAmount) {
         if (cycle != null) {
-            cycle.updateRemainingBalance(amount);
+            cycle.updateRemainingBalance(expenseAmount);
+            DatabaseHelper.getInstance().saveCycle(cycle);
+
+            if (cycle.getRemainingBalance() < 0) {
+                notificationService.sendExceededAlert();
+            } else if (notificationService.check80Percent(cycle)) {
+                notificationService.sendWarning();
+            }
         }
     }
 
@@ -42,10 +37,6 @@ public class BudgetManager {
         if (cycle == null || cycle.getLastUpdate() == null) {
             return true;
         }
-        
-        LocalDate lastUpdateDate = cycle.getLastUpdate();
-        LocalDate today = LocalDate.now();
-        
-        return !lastUpdateDate.isEqual(today);
+        return TimeService.isNewDay(cycle.getLastUpdate());
     }
 }
