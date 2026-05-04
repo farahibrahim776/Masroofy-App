@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import com.example.masroofy_app.navigation.SceneManager;
 
 import java.util.List;
 import java.util.Map;
@@ -106,33 +103,21 @@ public class DashboardController {
 
     @FXML
     public void handleLogExpense(ActionEvent event) {
-        navigateTo(event, "/view/NewExpenseUI.fxml");
+        SceneManager.switchScene("/view/NewExpenseUI.fxml");
     }
 
     @FXML
-    private void goToHistory(ActionEvent event) {
-        navigateTo(event, "/view/HistoryUI.fxml");
+    public void goToHistory(ActionEvent event) {
+        SceneManager.switchScene("/view/HistoryUI.fxml");
     }
 
     @FXML
-    private void goToStats(ActionEvent event) {
-        navigateTo(event, "/view/StatsUI.fxml");
+    public void goToStats(ActionEvent event) {
+        SceneManager.switchScene("/view/StatsUI.fxml");
     }
 
     @FXML
-    private void goToSettings(ActionEvent event) {
-        navigateTo(event, "/view/SettingsUI.fxml");
-    }
-
-    // Helper method to eliminate duplicate navigation code
-    private void navigateTo(ActionEvent event, String fxmlPath) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void goToSettings(ActionEvent event) {
+        SceneManager.switchScene("/view/SettingsUI.fxml");
     }
 }
