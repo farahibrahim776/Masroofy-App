@@ -1,12 +1,16 @@
 package com.example.masroofy_app.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class NewExpenseUI {
+    private int selectedCategoryId = 6;
 
     @FXML
     private VBox rootBox;
@@ -48,19 +52,43 @@ public class NewExpenseUI {
 
         cancelBtn.setOnAction(e -> System.out.println("Cancelled"));
 
-        confirmBtn.setOnAction(e ->
-                System.out.println("Confirmed: " + amountLabel.getText())
-        );
+        confirmBtn.setOnAction(e -> {
+            try {
+                double amount = Double.parseDouble(amountLabel.getText());
+                com.example.masroofy_app.model.BudgetCycle activeCycle = 
+                    com.example.masroofy_app.model.DatabaseHelper.getInstance().getCycle();
 
-        foodBtn.setOnAction(e -> System.out.println("Food selected"));
+                if (activeCycle != null) {
+                    com.example.masroofy_app.service.ExpenseManager manager = 
+                        new com.example.masroofy_app.service.ExpenseManager();
+                    manager.addExpense(activeCycle, "New Expense", amount, selectedCategoryId);
+                    System.out.println("Expense successfully saved!");
 
-        transportBtn.setOnAction(e -> System.out.println("Transport selected"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/DashboardUI.fxml"));
+                    Stage stage = (Stage) confirmBtn.getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                }
+            } catch (Exception ex) {
+                System.out.println("Error saving or navigating: " + ex.getMessage());
+            }
+        });
 
-        shoppingBtn.setOnAction(e -> System.out.println("Shopping selected"));
-
-        otherBtn.setOnAction(e -> System.out.println("Other selected"));
+        foodBtn.setOnAction(e -> selectedCategoryId = 1);
+        transportBtn.setOnAction(e -> selectedCategoryId = 2);
+        shoppingBtn.setOnAction(e -> selectedCategoryId = 3);
+        otherBtn.setOnAction(e -> selectedCategoryId = 6);
 
         addCategoryBtn.setOnAction(e -> System.out.println("Add Category clicked"));
+
+        cancelBtn.setOnAction(e -> {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/view/DashboardUI.fxml"));
+                Stage stage = (Stage) cancelBtn.getScene().getWindow();
+                stage.setScene(new Scene(root));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     private void scaleUI(Scene scene) {
