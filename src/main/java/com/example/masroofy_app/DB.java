@@ -25,7 +25,7 @@ public class DB {
     public static void initDatabase() {
 
         try (Connection conn = connect();
-             Statement stmt = conn.createStatement()) {
+            Statement stmt = conn.createStatement()) {
 
             // USERS
             stmt.execute("""
