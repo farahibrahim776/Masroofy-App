@@ -1,8 +1,13 @@
 package com.example.masroofy_app.Controller;
 
+import com.example.masroofy_app.model.DatabaseHelper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;;
+import javafx.stage.Stage;
 
 public class PinSignUPController {
     @FXML
@@ -11,6 +16,22 @@ public class PinSignUPController {
     @FXML
     public void unlock(ActionEvent event) {
         String pin = pinField.getText();
-        System.out.println("Unlock clicked! PIN entered: " + pin);
+        
+        if (pin == null || pin.trim().isEmpty()) {
+            System.out.println("PIN cannot be empty!");
+            return;
+        }
+
+        DatabaseHelper.getInstance().savePin(pin);
+        System.out.println("PIN successfully created and saved!");
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/SetupUI.fxml"));
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
