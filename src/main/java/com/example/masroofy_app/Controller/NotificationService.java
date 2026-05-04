@@ -12,8 +12,8 @@ public class NotificationService {
         }
         
         // Calculate spent amount
-        float spentAmount = cycle.getTotalAllowance() - cycle.getRemainingBalance();
-        float threshold = cycle.getTotalAllowance() * 0.80f;
+        double spentAmount = cycle.getTotalAllowance() - cycle.getRemainingBalance();
+        double threshold = cycle.getTotalAllowance() * 0.80f;
         
         return spentAmount >= threshold;
     }
