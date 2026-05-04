@@ -36,6 +36,18 @@ public class BudgetCycle {
         return endDate;
     }
 
+    public void setLastUpdate(LocalDate date) {
+        this.lastUpdate = date;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
+    }
+
     public double calculateDailyLimit() {
         long daysLeft = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), endDate);
         if (daysLeft <= 0) return 0;
