@@ -24,16 +24,19 @@ public class HistoryUI {
 
     @FXML
     public void initialize() {
+        todayBox.getChildren().clear();
+        yesterdayBox.getChildren().clear();
 
-        manager.addExpense(-100, 1, java.time.LocalDateTime.now());
-        manager.addExpense(-100, 2, java.time.LocalDateTime.now());
-        manager.addExpense(-100, 3, java.time.LocalDateTime.now());
+        com.example.masroofy_app.model.BudgetCycle activeCycle = com.example.masroofy_app.model.DatabaseHelper.getInstance().getCycle();
 
-        manager.addExpense(-50, 1, java.time.LocalDateTime.now().minusDays(1));
-        manager.addExpense(-50, 3, java.time.LocalDateTime.now().minusDays(1));
+        if (activeCycle == null) {
+            System.out.println("No active cycle to show history for.");
+            return;
+        }
 
-        for (Expense e : manager.getAllExpenses()) {
+        java.util.List<Expense> realExpenses = manager.getAllExpenses(activeCycle.getId());
 
+        for (Expense e: realExpenses) {
             VBox item = createItem(e);
 
             if (e.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
@@ -102,7 +105,13 @@ public class HistoryUI {
 
     @FXML
     private void goToStats(javafx.event.ActionEvent event) {
-        System.out.println("Go to Stats");
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/StatsUI.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
