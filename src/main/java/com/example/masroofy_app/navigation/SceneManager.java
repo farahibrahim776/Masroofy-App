@@ -15,7 +15,6 @@ public class SceneManager {
     }
 
     public static void switchScene(String fxmlPath) {
-        // FIX #19: Guard against null stage with a clear error message
         if (stage == null) {
             throw new IllegalStateException(
                 "SceneManager.init(stage) was never called. " +
@@ -29,9 +28,6 @@ public class SceneManager {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            // FIX #19: Previously exceptions were silently swallowed — the app stayed on the
-            // current screen with no feedback. Now we show a clear error dialog so the user
-            // (and developer) know a navigation failure occurred.
             javafx.application.Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Navigation Error");
