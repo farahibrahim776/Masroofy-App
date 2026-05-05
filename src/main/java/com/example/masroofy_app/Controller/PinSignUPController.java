@@ -16,14 +16,6 @@ public class PinSignUPController {
     private static final int MIN_PIN_LENGTH = 4;
     private static final int MAX_PIN_LENGTH = 8;
 
-    /**
-     * FIX #15 (naming): Renamed from unlock() to register().
-     * "unlock" is semantically correct for the LOGIN controller, but deeply confusing
-     * here on the SIGN-UP controller — this action creates a new PIN, it doesn't unlock anything.
-     *
-     * ACTION REQUIRED: Update the onAction attribute in PinSignUPController.fxml
-     * from onAction="#unlock" to onAction="#register".
-     */
     @FXML
     public void register(ActionEvent event) {
 
