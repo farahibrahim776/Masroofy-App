@@ -7,14 +7,10 @@ import java.nio.file.Paths;
 
 public class DB {
 
-    // FIX #18: Use a fixed path in the user's home directory
     private static final String URL = "jdbc:sqlite:" +
             Paths.get(System.getProperty("user.home"), ".masroofy", "masroofy.db").toString();
 
     public static Connection connect() {
-        // FIX #2: Throw RuntimeException instead of returning null silently.
-        // A null connection causes a NullPointerException on every SQL call,
-        // which is much harder to debug than a clear startup failure here.
         try {
             java.io.File dbDir = Paths.get(System.getProperty("user.home"), ".masroofy").toFile();
             if (!dbDir.exists()) {
@@ -31,7 +27,6 @@ public class DB {
     }
 
     public static void initDatabase(Connection conn) {
-        // FIX #2: Guard against null connection (defensive, since connect() now throws)
         if (conn == null) {
             throw new IllegalArgumentException("Cannot initialize database: connection is null.");
         }
@@ -48,7 +43,6 @@ public class DB {
             """);
 
             // BUDGET CYCLE
-            // FIX #7: last_update column persists lastUpdate correctly
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS budget_cycle (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -63,15 +57,12 @@ public class DB {
                 );
             """);
 
-            // Migration: add last_update to existing databases that don't have it
             try {
                 stmt.execute("ALTER TABLE budget_cycle ADD COLUMN last_update TEXT");
             } catch (Exception ignored) {
                 // Column already exists — safe to ignore
             }
 
-            // EXPENSES
-            // FIX #15: category is INTEGER for proper type safety
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS expenses (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
