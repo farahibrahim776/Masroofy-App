@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<!-- FIX #15: xmlns:fx normalized to "http://javafx.com/fxml" consistent with all other files -->
 <StackPane prefHeight="700" prefWidth="400"
            style="-fx-background-color: #f5f7fa;"
            xmlns="http://javafx.com/javafx/21"
@@ -53,7 +52,6 @@
             </VBox>
         </HBox>
 
-        <!-- FIX #14: Validation error label — controller sets this visible with message instead of console print -->
         <Label fx:id="errorLabel" text="" visible="false" wrapText="true" maxWidth="Infinity"
                style="-fx-text-fill: #e74c3c; -fx-font-size: 13px; -fx-font-weight: bold;"/>
 
