@@ -9,19 +9,19 @@ import javafx.scene.layout.VBox;
 
 public class NewExpenseUI {
 
-    private int selectedCategoryId = 6; // Default: "Other"
+    private int selectedCategoryId = 6; 
 
     @FXML private VBox rootBox;
     @FXML private TextField amountField;
-    @FXML private TextField titleField;   // FIX #5: fx:id="titleField" must exist in NewExpenseUI.fxml
-    @FXML private Label errorLabel;       // Add fx:id="errorLabel" in NewExpenseUI.fxml for inline errors
+    @FXML private TextField titleField; 
+    @FXML private Label errorLabel;    
     @FXML private Button cancelBtn;
     @FXML private Button confirmBtn;
     @FXML private Button foodBtn;
     @FXML private Button transportBtn;
     @FXML private Button shoppingBtn;
-    @FXML private Button billsBtn;          // category id=4
-    @FXML private Button entertainmentBtn;  // category id=5
+    @FXML private Button billsBtn;         
+    @FXML private Button entertainmentBtn;  
     @FXML private Button otherBtn;
 
 @FXML
