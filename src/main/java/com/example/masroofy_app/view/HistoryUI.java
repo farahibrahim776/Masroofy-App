@@ -15,7 +15,7 @@ public class HistoryUI {
 
     @FXML private VBox todayBox;
     @FXML private VBox yesterdayBox;
-    @FXML private VBox olderBox;  // Must be added to HistoryUI.fxml — see FIX #10 note below
+    @FXML private VBox olderBox;  
 
     private ExpenseManager manager = new ExpenseManager();
 
@@ -38,13 +38,7 @@ public class HistoryUI {
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
 
-        // FIX #6 & #10: Properly bucket expenses into today / yesterday / older.
-        // FIX #10 (HistoryUI): If olderBox is null (not yet in FXML), expenses older than
-        // yesterday are NOT silently dumped into yesterdayBox anymore. Instead they are skipped
-        // with a warning, so the UI never shows incorrect labels.
-        // ACTION REQUIRED: Add a VBox with fx:id="olderBox" to HistoryUI.fxml so all history is shown.
         for (Expense e : realExpenses) {
-            // FIX #17: Expense.date is now LocalDate — no more .toLocalDate() conversion needed
             LocalDate expenseDate = e.getDate();
             VBox item = createItem(e);
 
@@ -55,8 +49,6 @@ public class HistoryUI {
             } else if (olderBox != null) {
                 olderBox.getChildren().add(item);
             } else {
-                // FIX #10: Don't silently mislabel older expenses as "Yesterday".
-                // Log a warning so the developer knows olderBox needs to be added to the FXML.
                 System.out.println("WARNING: olderBox is null in HistoryUI.fxml — expense from "
                         + expenseDate + " is not displayed. Add fx:id='olderBox' to the FXML.");
             }
@@ -71,7 +63,7 @@ public class HistoryUI {
 
         Label category = new Label(getCategoryName(e.getCategoryId()));
 
-        Label date = new Label(e.getFormattedDate()); // FIX #17: getFormattedDate() now returns LocalDate.toString()
+        Label date = new Label(e.getFormattedDate()); 
         date.setStyle("-fx-text-fill: #888; -fx-font-size: 11px;");
 
         row.getChildren().addAll(amount, category, date);
@@ -101,7 +93,6 @@ public class HistoryUI {
         return com.example.masroofy_app.utils.CategoryUtils.getCategoryName(id);
     }
 
-    // FIX #14: Use SceneManager for all navigation — consistent with the rest of the app
     @FXML
     private void goToDashboard(ActionEvent event) {
         SceneManager.switchScene("/view/DashboardUI.fxml");
