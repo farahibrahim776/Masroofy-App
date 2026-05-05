@@ -20,11 +20,10 @@ public class SetupUI {
     private DatePicker endDate;
 
     @FXML
-    private Label errorLabel; // Add fx:id="errorLabel" in SetupUI.fxml to show errors inline
+    private Label errorLabel; 
 
     private BudgetCycle cycle;
 
-    // FIX #13: Use double instead of float for monetary values — no silent precision loss
     public BudgetCycle inputCycleData(double total, LocalDate start, LocalDate end) {
         if (!validateInput(total, start, end)) {
             return null;
@@ -39,7 +38,6 @@ public class SetupUI {
     @FXML
     public void handleStart() {
         try {
-            // FIX #13: Parse as double, not float
             double total = Double.parseDouble(amountField.getText());
             LocalDate start = startDate.getValue();
             LocalDate end = endDate.getValue();
@@ -51,26 +49,21 @@ public class SetupUI {
                 return;
             }
 
-            // FIX #16: Check if saveCycle() succeeded before navigating away.
-            // Previously a silent DB failure would let the app navigate to the dashboard
-            // showing the old (or no) cycle, with no indication anything went wrong.
             boolean saved = DatabaseHelper.getInstance().saveCycle(cycle);
             if (!saved) {
                 showError("Failed to save your budget cycle. Please try again.");
                 return;
             }
 
-            // Reload the saved cycle so we have the correct DB-assigned id
             cycle = DatabaseHelper.getInstance().getCycle();
 
-            // FIX #16: If getCycle() returns null after a successful save, something is wrong
+          
             if (cycle == null) {
                 showError("Budget cycle saved but could not be loaded. Please restart the app.");
                 return;
             }
 
             System.out.println("Cycle Created!");
-            // FIX #14: Use SceneManager for consistent navigation
             SceneManager.switchScene("/view/DashboardUI.fxml");
 
         } catch (NumberFormatException e) {
