@@ -12,8 +12,6 @@
     <children>
         <VBox AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
 
-            <!-- FIX #9: Replace invisible-button centering hack with a proper StackPane header.
-                 Back button is left-aligned inside its own HBox layer; title is independently centered. -->
             <StackPane style="-fx-padding: 20px 20px 10px 20px;">
                 <HBox alignment="CENTER_LEFT">
                     <Button text="← Back" onAction="#goBack"
@@ -38,12 +36,10 @@
 
                             <Label text="APPLICATION" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #95a5a6;"/>
 
-                            <!-- FIX #2: onAction added — was missing, button did nothing -->
                             <Button text="Manage Categories" onAction="#handleManageCategories"
                                     maxWidth="Infinity" alignment="BASELINE_LEFT"
                                     style="-fx-background-color: #f8f9fa; -fx-text-fill: #2c3e50; -fx-font-size: 15px; -fx-padding: 12px 15px; -fx-background-radius: 10px; -fx-cursor: hand;"/>
 
-                            <!-- FIX #2: onAction added — was missing, button did nothing -->
                             <Button text="Reset Cycle" onAction="#handleResetCycle"
                                     maxWidth="Infinity" alignment="BASELINE_LEFT"
                                     style="-fx-background-color: #f8f9fa; -fx-text-fill: #2c3e50; -fx-font-size: 15px; -fx-padding: 12px 15px; -fx-background-radius: 10px; -fx-cursor: hand;"/>
@@ -65,7 +61,6 @@
                                 <CheckBox fx:id="privacyCheck" style="-fx-cursor: hand;"/>
                             </HBox>
 
-                            <!-- FIX #2: onAction added — was missing, button did nothing -->
                             <Button text="Change PIN" onAction="#handleChangePIN"
                                     maxWidth="Infinity" alignment="BASELINE_LEFT"
                                     style="-fx-background-color: #f8f9fa; -fx-text-fill: #2c3e50; -fx-font-size: 15px; -fx-padding: 12px 15px; -fx-background-radius: 10px; -fx-cursor: hand;"/>
@@ -85,7 +80,6 @@
                                 <Label text="Storage: SQLite Local" style="-fx-text-fill: #7f8c8d; -fx-font-size: 14px;"/>
                             </VBox>
 
-                            <!-- FIX #2: onAction added — was missing, button did nothing (especially dangerous for Reset) -->
                             <Button text="Reset Database" onAction="#handleResetDatabase"
                                     maxWidth="Infinity" alignment="CENTER"
                                     style="-fx-background-color: #ffebee; -fx-text-fill: #e74c3c; -fx-font-size: 15px; -fx-font-weight: bold; -fx-padding: 12px; -fx-background-radius: 10px; -fx-cursor: hand;"/>
