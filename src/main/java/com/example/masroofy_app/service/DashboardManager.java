@@ -14,13 +14,6 @@ public class DashboardManager {
         return cycle.getRemainingBalance();
     }
 
-    /**
-     * FIX #7: Removed duplicate daily-limit calculation.
-     * BudgetCycle.calculateDailyLimit() is now the single source of truth —
-     * it already rounds to 2 decimal places, so we don't need to repeat that here.
-     * Previously this method had its own rounding (Math.round / 100.0) that differed
-     * subtly from BudgetCycle's unrounded version, causing display vs. storage drift.
-     */
     public double getDailyLimit(BudgetCycle cycle) {
         if (cycle == null) return 0.0;
         return cycle.calculateDailyLimit();
