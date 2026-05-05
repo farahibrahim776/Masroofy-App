@@ -1,14 +1,19 @@
 package com.example.masroofy_app.Controller;
 
-import com.example.masroofy_app.view.StatsUI;
+import com.example.masroofy_app.model.BudgetCycle;
+import com.example.masroofy_app.model.DatabaseHelper;
+import com.example.masroofy_app.model.Expense;
+import com.example.masroofy_app.navigation.SceneManager;
+import com.example.masroofy_app.utils.CategoryUtils;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class StatsController {
 
@@ -18,88 +23,51 @@ public class StatsController {
     @FXML
     private Label totalLabel;
 
-    private StatsUI view;
-
     @FXML
     public void initialize() {
-        view = new StatsUI(pieChart, totalLabel);
         loadData();
     }
 
     private void loadData() {
-        view.setTotal("400 EGP");
-        view.setChartData(150, 100, 150);
-    }
+        pieChart.getData().clear();
+        double totalExpenses = 0.0;
 
+        BudgetCycle currentCycle = DatabaseHelper.getInstance().getCycle();
 
-    private void navigateTo(String fxmlFile) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/masroofy_app/" + fxmlFile)
-            );
+        if (currentCycle != null) {
+            List<Expense> expenses = DatabaseHelper.getInstance().getExpenses(currentCycle.getId());
 
-            Parent root = loader.load();
+            Map<Integer, Double> categoryTotals = new HashMap<>();
 
-            Stage stage = (Stage) totalLabel.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            for (Expense expense : expenses) {
+                double amount = expense.getAmount();
+                totalExpenses += amount;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                int catId = expense.getCategoryId();
+                categoryTotals.put(catId, categoryTotals.getOrDefault(catId, 0.0) + amount);
+            }
+
+            for (Map.Entry<Integer, Double> entry : categoryTotals.entrySet()) {
+                String categoryName = CategoryUtils.getCategoryName(entry.getKey());
+                pieChart.getData().add(new PieChart.Data(categoryName, entry.getValue()));
+            }
         }
+
+        totalLabel.setText(String.format("%.2f EGP", totalExpenses));
     }
 
     @FXML
     private void handleDashboard(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/view/DashboardUI.fxml")
-            );
-
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource())
-                    .getScene().getWindow();
-
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SceneManager.switchScene("/view/DashboardUI.fxml");
     }
 
     @FXML
     private void handleHistory(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/view/HistoryUI.fxml")
-            );
-
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource())
-                    .getScene().getWindow();
-
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SceneManager.switchScene("/view/HistoryUI.fxml");
     }
 
     @FXML
     private void handleSettings(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/view/SettingsUI.fxml")
-            );
-
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource())
-                    .getScene().getWindow();
-
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SceneManager.switchScene("/view/SettingsUI.fxml");
     }
 }

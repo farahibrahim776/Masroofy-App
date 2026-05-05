@@ -20,26 +20,29 @@ public class BudgetCycle {
         this.lastUpdate = startDate;
     }
 
-    public int getId() {
-        return id;
+    public static BudgetCycle fromDatabase(int id, double totalAllowance, LocalDate startDate,
+                                           LocalDate endDate, double remainingBalance, LocalDate lastUpdate) {
+        BudgetCycle cycle = new BudgetCycle(id, totalAllowance, startDate, endDate);
+        cycle.remainingBalance = remainingBalance;
+        cycle.lastUpdate = (lastUpdate != null) ? lastUpdate : startDate;
+        return cycle;
     }
 
-    public double getRemainingBalance() {
-        return remainingBalance;
-    }
+    public int getId() { return id; }
+    public double getRemainingBalance() { return remainingBalance; }
+    public double getTotalAllowance() { return totalAllowance; }
+    public LocalDate getEndDate() { return endDate; }
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getLastUpdate() { return lastUpdate; }
 
-    public double getTotalAllowance() {
-        return totalAllowance;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
+    public void setLastUpdate(LocalDate date) { this.lastUpdate = date; }
+    public void setRemainingBalance(double balance) { this.remainingBalance = balance; }
 
     public double calculateDailyLimit() {
-        long daysLeft = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), endDate);
-        if (daysLeft <= 0) return 0;
-        return remainingBalance / daysLeft;
+        long daysLeft = ChronoUnit.DAYS.between(LocalDate.now(), endDate);
+        if (daysLeft <= 0) return 0.0;
+        double raw = remainingBalance / daysLeft;
+        return Math.round(raw * 100) / 100.0;
     }
 
     public void updateRemainingBalance(double amountSpent) {

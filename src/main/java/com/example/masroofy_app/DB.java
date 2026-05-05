@@ -3,29 +3,35 @@ package com.example.masroofy_app;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.nio.file.Paths;
 
 public class DB {
 
-    private static final String URL = "jdbc:sqlite:masroofy.db";
+    private static final String URL = "jdbc:sqlite:" +
+            Paths.get(System.getProperty("user.home"), ".masroofy", "masroofy.db").toString();
 
     public static Connection connect() {
         try {
+            java.io.File dbDir = Paths.get(System.getProperty("user.home"), ".masroofy").toFile();
+            if (!dbDir.exists()) {
+                dbDir.mkdirs();
+            }
+
             Connection conn = DriverManager.getConnection(URL);
-
             conn.createStatement().execute("PRAGMA foreign_keys = ON");
-
             return conn;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Failed to connect to the database at: " + URL, e);
         }
     }
 
-    public static void initDatabase() {
+    public static void initDatabase(Connection conn) {
+        if (conn == null) {
+            throw new IllegalArgumentException("Cannot initialize database: connection is null.");
+        }
 
-        try (Connection conn = connect();
-             Statement stmt = conn.createStatement()) {
+        try (Statement stmt = conn.createStatement()) {
 
             // USERS
             stmt.execute("""
@@ -45,17 +51,23 @@ public class DB {
                     end_date TEXT NOT NULL,
                     remaining_balance REAL NOT NULL,
                     daily_limit REAL NOT NULL,
+                    last_update TEXT,
                     active INTEGER DEFAULT 1,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 );
             """);
 
-            // EXPENSES
+            try {
+                stmt.execute("ALTER TABLE budget_cycle ADD COLUMN last_update TEXT");
+            } catch (Exception ignored) {
+                // Column already exists — safe to ignore
+            }
+
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS expenses (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title TEXT,
-                    category TEXT NOT NULL,
+                    category INTEGER NOT NULL,
                     amount REAL NOT NULL,
                     date TEXT NOT NULL,
                     cycle_id INTEGER,
@@ -87,7 +99,7 @@ public class DB {
             System.out.println("Database Ready.");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to initialize database schema.", e);
         }
     }
 }

@@ -1,82 +1,117 @@
 package com.example.masroofy_app.view;
 
+import com.example.masroofy_app.navigation.SceneManager;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.Scene;
 
 public class NewExpenseUI {
 
-    @FXML
-    private VBox rootBox;
+    private int selectedCategoryId = 6; 
 
-    @FXML
-    private Label amountLabel;
+    @FXML private VBox rootBox;
+    @FXML private TextField amountField;
+    @FXML private TextField titleField; 
+    @FXML private Label errorLabel;    
+    @FXML private Button cancelBtn;
+    @FXML private Button confirmBtn;
+    @FXML private Button foodBtn;
+    @FXML private Button transportBtn;
+    @FXML private Button shoppingBtn;
+    @FXML private Button billsBtn;         
+    @FXML private Button entertainmentBtn;  
+    @FXML private Button otherBtn;
 
-    @FXML
-    private Button cancelBtn;
+@FXML
+public void initialize() {
 
-    @FXML
-    private Button confirmBtn;
+    rootBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        if (newScene != null) {
+            newScene.widthProperty().addListener((o, oldVal, newVal) -> scaleUI(newScene));
+            newScene.heightProperty().addListener((o, oldVal, newVal) -> scaleUI(newScene));
+        }
+    });
 
-    @FXML
-    private Button foodBtn;
+    // Category buttons list
+    java.util.List<Button> categoryBtns = java.util.List.of(
+        foodBtn, transportBtn, shoppingBtn, billsBtn, entertainmentBtn, otherBtn
+    );
 
-    @FXML
-    private Button transportBtn;
+    // Helper to highlight selected button
+    java.util.function.Consumer<Button> selectCategory = (selected) -> {
+        for (Button btn : categoryBtns) {
+            btn.setStyle("-fx-background-color: #f1f2f6; -fx-text-fill: #2c3e50; -fx-background-radius: 20px; -fx-padding: 8px 15px; -fx-cursor: hand;");
+        }
+        selected.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 20px; -fx-padding: 8px 15px; -fx-cursor: hand; -fx-font-weight: bold;");
+    };
 
-    @FXML
-    private Button shoppingBtn;
+    foodBtn.setOnAction(e -> { selectedCategoryId = 1; selectCategory.accept(foodBtn); });
+    transportBtn.setOnAction(e -> { selectedCategoryId = 2; selectCategory.accept(transportBtn); });
+    shoppingBtn.setOnAction(e -> { selectedCategoryId = 3; selectCategory.accept(shoppingBtn); });
+    billsBtn.setOnAction(e -> { selectedCategoryId = 4; selectCategory.accept(billsBtn); });
+    entertainmentBtn.setOnAction(e -> { selectedCategoryId = 5; selectCategory.accept(entertainmentBtn); });
+    otherBtn.setOnAction(e -> { selectedCategoryId = 6; selectCategory.accept(otherBtn); });
 
-    @FXML
-    private Button otherBtn;
+    confirmBtn.setOnAction(e -> {
+        String amountText = amountField.getText();
+        if (amountText == null || amountText.trim().isEmpty()) {
+            showError("Please enter an amount.");
+            return;
+        }
 
-    @FXML
-    private Button addCategoryBtn;
+        double amount;
+        try {
+            amount = Double.parseDouble(amountText.trim());
+        } catch (NumberFormatException ex) {
+            showError("Please enter a valid number.");
+            return;
+        }
 
-    @FXML
-    public void initialize() {
+        if (amount <= 0) {
+            showError("Amount must be greater than zero.");
+            return;
+        }
 
-        rootBox.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
+        String title = (titleField != null && !titleField.getText().trim().isEmpty())
+                ? titleField.getText().trim()
+                : "Expense";
 
-                newScene.widthProperty().addListener((o, oldVal, newVal) -> scaleUI(newScene));
-                newScene.heightProperty().addListener((o, oldVal, newVal) -> scaleUI(newScene));
-            }
-        });
+        com.example.masroofy_app.model.BudgetCycle activeCycle =
+                com.example.masroofy_app.model.DatabaseHelper.getInstance().getCycle();
 
-        cancelBtn.setOnAction(e -> System.out.println("Cancelled"));
+        if (activeCycle == null) {
+            showError("No active budget cycle found. Please set up a budget first.");
+            return;
+        }
 
-        confirmBtn.setOnAction(e ->
-                System.out.println("Confirmed: " + amountLabel.getText())
-        );
+        com.example.masroofy_app.service.ExpenseManager manager =
+                new com.example.masroofy_app.service.ExpenseManager();
+        manager.addExpense(activeCycle, title, amount, selectedCategoryId);
+        System.out.println("Expense successfully saved!");
 
-        foodBtn.setOnAction(e -> System.out.println("Food selected"));
+        SceneManager.switchScene("/view/DashboardUI.fxml");
+    });
 
-        transportBtn.setOnAction(e -> System.out.println("Transport selected"));
+    cancelBtn.setOnAction(e -> SceneManager.switchScene("/view/DashboardUI.fxml"));
+}
 
-        shoppingBtn.setOnAction(e -> System.out.println("Shopping selected"));
-
-        otherBtn.setOnAction(e -> System.out.println("Other selected"));
-
-        addCategoryBtn.setOnAction(e -> System.out.println("Add Category clicked"));
+    private void showError(String message) {
+        if (errorLabel != null) {
+            errorLabel.setText(message);
+            errorLabel.setVisible(true);
+        } else {
+            System.out.println("Input error: " + message);
+        }
     }
 
-    private void scaleUI(Scene scene) {
-
+    private void scaleUI(javafx.scene.Scene scene) {
         double baseWidth = 400;
         double baseHeight = 600;
-
-        double scaleX = scene.getWidth() / baseWidth;
-        double scaleY = scene.getHeight() / baseHeight;
-
-        double scale = Math.min(scaleX, scaleY);
-
+        double scale = Math.min(scene.getWidth() / baseWidth, scene.getHeight() / baseHeight);
         double minScale = 0.8;
-        if(scale < minScale){
-            scale=minScale;
-        }
+        if (scale < minScale) scale = minScale;
         rootBox.setScaleX(scale);
         rootBox.setScaleY(scale);
     }

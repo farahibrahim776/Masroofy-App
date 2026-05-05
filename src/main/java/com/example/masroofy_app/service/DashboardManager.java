@@ -9,38 +9,24 @@ import com.example.masroofy_app.model.Expense;
 
 public class DashboardManager {
 
-    public float getRemainingBalance(BudgetCycle cycle) {
-        if (cycle == null) return 0f;
-
-        return (float) cycle.getRemainingBalance();
+    public double getRemainingBalance(BudgetCycle cycle) {
+        if (cycle == null) return 0.0;
+        return cycle.getRemainingBalance();
     }
 
-    public float getDailyLimit(BudgetCycle cycle) {
-        if (cycle == null) return 0f;
-
-        long daysLeft = cycle.getRemainingDays();
-
-        if (daysLeft <= 0) {
-            return 0f;
-        }
-
-        return Math.round((getRemainingBalance(cycle) / daysLeft) * 100) / 100f;
+    public double getDailyLimit(BudgetCycle cycle) {
+        if (cycle == null) return 0.0;
+        return cycle.calculateDailyLimit();
     }
 
-    // PieChart data
-    public Map<Integer, Float> generateCategorySummary(List<Expense> expenses) {
-
-        Map<Integer, Float> summary = new HashMap<>();
-
+    public Map<Integer, Double> generateCategorySummary(List<Expense> expenses) {
+        Map<Integer, Double> summary = new HashMap<>();
         if (expenses == null) return summary;
 
         for (Expense e : expenses) {
-
             int categoryId = e.getCategoryId();
-            float amount = (float) e.getAmount();
-
-            summary.put(categoryId,
-                    summary.getOrDefault(categoryId, 0f) + amount);
+            double amount = e.getAmount();
+            summary.put(categoryId, summary.getOrDefault(categoryId, 0.0) + amount);
         }
 
         return summary;
