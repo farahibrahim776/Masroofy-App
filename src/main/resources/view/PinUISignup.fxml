@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane prefHeight="700" prefWidth="400"
+           style="-fx-background-color: #f5f7fa;"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.masroofy_app.Controller.PinSignUPController">
+
+    <!-- Setup Card -->
+    <VBox spacing="20" alignment="CENTER" maxWidth="320"
+          style="-fx-background-color: white;
+                 -fx-background-radius: 20px;
+                 -fx-padding: 40px 30px;
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 5);">
+
+        <!-- Setup Icon -->
+        <Label text="🛡️" style="-fx-font-size: 48px;"/>
+
+        <!-- Headers -->
+        <VBox alignment="CENTER" spacing="5">
+            <Label text="Secure Your App" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <!-- FIX #14: Hint text now accurately reflects validation rules -->
+            <Label text="Choose a 4–8 digit numeric PIN." textAlignment="CENTER" wrapText="true"
+                   style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+        </VBox>
+
+        <!-- FIX #1: PasswordField declared here — controller field must also be PasswordField, not TextField -->
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="PIN" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+            <PasswordField fx:id="pinField" alignment="CENTER" promptText="Enter PIN"
+                           style="-fx-font-size: 28px;
+                                  -fx-background-color: #f1f2f6;
+                                  -fx-background-radius: 12px;
+                                  -fx-padding: 12px 15px;
+                                  -fx-text-fill: #2c3e50;
+                                  -fx-prompt-text-fill: #bdc3c7;"/>
+        </VBox>
+
+        <!-- Confirm PIN field -->
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Confirm PIN" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+            <PasswordField fx:id="confirmPinField" alignment="CENTER" promptText="Re-enter PIN"
+                           style="-fx-font-size: 28px;
+                                  -fx-background-color: #f1f2f6;
+                                  -fx-background-radius: 12px;
+                                  -fx-padding: 12px 15px;
+                                  -fx-text-fill: #2c3e50;
+                                  -fx-prompt-text-fill: #bdc3c7;"/>
+        </VBox>
+
+        <!-- FIX #14: Error label — controller shows validation errors here instead of console -->
+        <Label fx:id="errorLabel" text="" visible="false" wrapText="true"
+               style="-fx-text-fill: #e74c3c; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+
+        <!-- Set PIN Button -->
+        <Button text="Set PIN" onAction="#register" maxWidth="Infinity"
+                style="-fx-background-color: #2c3e50;
+                       -fx-text-fill: white;
+                       -fx-font-size: 18px;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 25px;
+                       -fx-padding: 12px;
+                       -fx-cursor: hand;
+                       -fx-effect: dropshadow(gaussian, rgba(44, 62, 80, 0.4), 10, 0, 0, 3);"/>
+    </VBox>
+</StackPane>
