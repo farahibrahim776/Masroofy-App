@@ -24,13 +24,11 @@ public class SettingsUI {
 
     @FXML
     public void goBack() {
-        // FIX #1: Use SceneManager instead of manually loading FXML and setting a new scene.
         SceneManager.switchScene("/view/DashboardUI.fxml");
     }
 
     @FXML
     public void handleManageCategories() {
-        // Placeholder — wire to a CategoryManager scene when implemented
         System.out.println("Manage Categories clicked");
     }
 
