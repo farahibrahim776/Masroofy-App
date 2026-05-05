@@ -6,15 +6,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
 
-<!--
-    Controller: DashboardController
-    @FXML fields required:  balanceLabel, dailyLimitLabel, daysLabel, pieChart
-    @FXML methods required: handleLogExpense, goToHistory, goToStats, goToSettings
-
-    FIX: Removed fx:id="progressCircle" (Circle node) — DashboardController never
-    declares or references this field, so it caused a silent injection failure at runtime.
-    The visual ring has been kept as a decorative static element only.
--->
 <AnchorPane prefHeight="700" prefWidth="400"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
