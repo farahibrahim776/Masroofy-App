@@ -4,7 +4,6 @@ import com.example.masroofy_app.model.BudgetCycle;
 import com.example.masroofy_app.model.DatabaseHelper;
 import com.example.masroofy_app.model.Expense;
 import com.example.masroofy_app.navigation.SceneManager;
-// FIX #8: Use the shared CategoryUtils instead of a duplicate inline map
 import com.example.masroofy_app.utils.CategoryUtils;
 
 import javafx.fxml.FXML;
@@ -23,8 +22,6 @@ public class StatsController {
 
     @FXML
     private Label totalLabel;
-
-    // FIX #8: Removed duplicate categoryMap — CategoryUtils.getCategoryName() is used below
 
     @FXML
     public void initialize() {
@@ -50,7 +47,6 @@ public class StatsController {
                 categoryTotals.put(catId, categoryTotals.getOrDefault(catId, 0.0) + amount);
             }
 
-            // FIX #8: Use CategoryUtils — single source of truth for category names
             for (Map.Entry<Integer, Double> entry : categoryTotals.entrySet()) {
                 String categoryName = CategoryUtils.getCategoryName(entry.getKey());
                 pieChart.getData().add(new PieChart.Data(categoryName, entry.getValue()));
