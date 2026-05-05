@@ -3,22 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<!--
-    Controller: NewExpenseUI (com.example.masroofy_app.view.NewExpenseUI)
-    @FXML fields required:  rootBox, amountField, titleField, errorLabel,
-                            cancelBtn, confirmBtn,
-                            foodBtn, transportBtn, shoppingBtn,
-                            billsBtn, entertainmentBtn, otherBtn
-    All wired via setOnAction in initialize() — no onAction attributes needed on buttons
-    except the ones explicitly listed below.
-
-    FIXES:
-    - Added fx:id="titleField"   — required by NewExpenseUI.java and DatabaseHelper.insertExpense()
-    - Added fx:id="errorLabel"   — controller shows validation errors here instead of console
-    - Added fx:id="billsBtn"     — category id=4, was missing from original UI
-    - Added fx:id="entertainmentBtn" — category id=5, was missing from original UI
-    - Removed addCategoryBtn     — was only wired to System.out.println, dead UI element
--->
 <AnchorPane prefHeight="700" prefWidth="400"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
@@ -41,9 +25,6 @@
                            style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
                     <!-- Title Input Card -->
-                    <!-- FIX: fx:id="titleField" added — NewExpenseUI.java reads this to pass a
-                         meaningful title to DatabaseHelper.insertExpense(). Without it, the title
-                         was always "Expense" regardless of what the user typed. -->
                     <VBox alignment="CENTER_LEFT" spacing="10"
                           style="-fx-background-color: white;
                                  -fx-background-radius: 15px;
@@ -75,9 +56,6 @@
                     </VBox>
 
                     <!-- Category Selection Card -->
-                    <!-- FIX: billsBtn (id=4) and entertainmentBtn (id=5) added — these categories
-                         existed in DB and CategoryUtils but were missing from the UI entirely,
-                         making them un-selectable. addCategoryBtn removed (was dead code). -->
                     <VBox alignment="CENTER" spacing="15"
                           style="-fx-background-color: white;
                                  -fx-background-radius: 15px;
@@ -101,8 +79,6 @@
                         </FlowPane>
                     </VBox>
 
-                    <!-- FIX: fx:id="errorLabel" added — controller calls showError() which sets
-                         this label's text and makes it visible instead of printing to console. -->
                     <Label fx:id="errorLabel" text="" visible="false" wrapText="true"
                            style="-fx-text-fill: #e74c3c; -fx-font-size: 13px; -fx-font-weight: bold;"/>
 
