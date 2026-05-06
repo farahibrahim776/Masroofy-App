@@ -5,11 +5,22 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.nio.file.Paths;
 
+/**
+ * Database utility class responsible for creating and managing
+ * the SQLite database connection and initializing database tables.
+ */
 public class DB {
 
     private static final String URL = "jdbc:sqlite:" +
             Paths.get(System.getProperty("user.home"), ".masroofy", "masroofy.db").toString();
 
+    /**
+     * Establishes and returns a connection to the SQLite database.
+     * Also ensures that the database directory exists and enables foreign keys.
+     *
+     * @return active database Connection
+     * @throws RuntimeException if the connection fails
+     */
     public static Connection connect() {
         try {
             java.io.File dbDir = Paths.get(System.getProperty("user.home"), ".masroofy").toFile();
@@ -26,6 +37,13 @@ public class DB {
         }
     }
 
+    /**
+     * Initializes the database by creating required tables if they do not exist.
+     * Includes users, budget_cycle, and expenses tables.
+     *
+     * @param conn active database connection (must not be null)
+     * @throws IllegalArgumentException if connection is null
+     */
     public static void initDatabase(Connection conn) {
         if (conn == null) {
             throw new IllegalArgumentException("Cannot initialize database: connection is null.");

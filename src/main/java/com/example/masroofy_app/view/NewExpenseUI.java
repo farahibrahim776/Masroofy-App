@@ -7,6 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controller class for the Add New Expense screen.
+ * Handles user input, validation, category selection,
+ * and saving the expense to the database.
+ */
 public class NewExpenseUI {
 
     private int selectedCategoryId = 6; 
@@ -24,6 +29,12 @@ public class NewExpenseUI {
     @FXML private Button entertainmentBtn;  
     @FXML private Button otherBtn;
 
+    /**
+     * Initializes the UI.
+     * - Adds responsive scaling behavior
+     * - Handles category selection
+     * - Handles confirm and cancel actions
+     */
 @FXML
 public void initialize() {
 
@@ -54,6 +65,12 @@ public void initialize() {
     entertainmentBtn.setOnAction(e -> { selectedCategoryId = 5; selectCategory.accept(entertainmentBtn); });
     otherBtn.setOnAction(e -> { selectedCategoryId = 6; selectCategory.accept(otherBtn); });
 
+    /**
+     * Confirm button logic:
+     * - Validate input
+     * - Save expense
+     * - Navigate to dashboard
+     */
     confirmBtn.setOnAction(e -> {
         String amountText = amountField.getText();
         if (amountText == null || amountText.trim().isEmpty()) {
@@ -97,6 +114,9 @@ public void initialize() {
     cancelBtn.setOnAction(e -> SceneManager.switchScene("/view/DashboardUI.fxml"));
 }
 
+    /**
+     * Displays error message to the user.
+     */
     private void showError(String message) {
         if (errorLabel != null) {
             errorLabel.setText(message);
@@ -106,6 +126,9 @@ public void initialize() {
         }
     }
 
+    /**
+     * Scales UI responsively based on window size.
+     */
     private void scaleUI(javafx.scene.Scene scene) {
         double baseWidth = 400;
         double baseHeight = 600;

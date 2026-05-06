@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
+/**
+ * Controller class responsible for handling PIN login authentication.
+ * Validates user input and allows access to the dashboard if PIN is correct.
+ */
 public class PinLoginController {
 
     @FXML
@@ -15,6 +19,13 @@ public class PinLoginController {
     @FXML
     private Label errorLabel;
 
+    /**
+     * Handles the unlock/login action.
+     * Validates the entered PIN against the database and navigates
+     * to the dashboard if authentication is successful.
+     *
+     * @param event the action event triggered by the login button
+     */
     @FXML
     public void unlock(ActionEvent event) {
 
@@ -36,6 +47,12 @@ public class PinLoginController {
         }
     }
 
+
+    /**
+     * Displays an error message to the user or console if UI label is unavailable.
+     *
+     * @param message the error message to display
+     */
     private void showError(String message) {
         if (errorLabel != null) {
             errorLabel.setText(message);

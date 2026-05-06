@@ -1,0 +1,8 @@
+module:com.example.masroofy_app
+com.example.masroofy_app
+com.example.masroofy_app.Controller
+com.example.masroofy_app.model
+com.example.masroofy_app.navigation
+com.example.masroofy_app.service
+com.example.masroofy_app.utils
+com.example.masroofy_app.view

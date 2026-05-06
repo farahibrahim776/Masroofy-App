@@ -14,6 +14,11 @@ import com.example.masroofy_app.navigation.SceneManager;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller class for the Dashboard screen.
+ * Responsible for displaying budget summary including:
+ * remaining balance, daily limit, remaining days, and expense distribution chart.
+ */
 public class DashboardController {
 
     private final DashboardManager dashboardManager = new DashboardManager();
@@ -33,6 +38,11 @@ public class DashboardController {
     private BudgetCycle currentCycle;
     private List<Expense> expenses;
 
+    /**
+     * Initializes the dashboard screen.
+     * Loads the active budget cycle and its related expenses.
+     * If no cycle exists, default values are displayed.
+     */
     @FXML
     public void initialize() {
         this.currentCycle = DatabaseHelper.getInstance().getCycle();
@@ -48,10 +58,20 @@ public class DashboardController {
         }
     }
 
+    /**
+     * Retrieves the category name based on its ID.
+     *
+     * @param id category ID
+     * @return category name as a String
+     */
     private String getCategoryNameById(int id) {
         return com.example.masroofy_app.utils.CategoryUtils.getCategoryName(id);
     }
 
+    /**
+     * Loads all dashboard data including:
+     * remaining balance, daily limit, remaining days, and pie chart data.
+     */
     private void loadDashboard() {
         if (currentCycle == null) return;
 
@@ -71,6 +91,10 @@ public class DashboardController {
         loadPieChart();
     }
 
+    /**
+     * Loads and displays expense distribution in the pie chart
+     * grouped by category.
+     */
     private void loadPieChart() {
         if (expenses == null || expenses.isEmpty()) {
             pieChart.getData().clear();
@@ -88,22 +112,41 @@ public class DashboardController {
     }
 
     // ===== Navigation Methods =====
-
+    /**
+     * Navigates to the Add New Expense screen.
+     *
+     * @param event action event triggered by user
+     */
     @FXML
     public void handleLogExpense(ActionEvent event) {
         SceneManager.switchScene("/view/NewExpenseUI.fxml");
     }
 
+    /**
+     * Navigates to the expense history screen.
+     *
+     * @param event action event triggered by user
+     */
     @FXML
     public void goToHistory(ActionEvent event) {
         SceneManager.switchScene("/view/HistoryUI.fxml");
     }
 
+    /**
+     * Navigates to the statistics screen.
+     *
+     * @param event action event triggered by user
+     */
     @FXML
     public void goToStats(ActionEvent event) {
         SceneManager.switchScene("/view/StatsUI.fxml");
     }
 
+    /**
+     * Navigates to the settings screen.
+     *
+     * @param event action event triggered by user
+     */
     @FXML
     public void goToSettings(ActionEvent event) {
         SceneManager.switchScene("/view/SettingsUI.fxml");

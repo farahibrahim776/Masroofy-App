@@ -8,9 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
 
+/**
+ * Controller class for the History screen.
+ * Responsible for displaying user expenses grouped by date:
+ * Today, Yesterday, and Older.
+ */
 public class HistoryUI {
 
     @FXML private VBox todayBox;
@@ -19,6 +23,11 @@ public class HistoryUI {
 
     private ExpenseManager manager = new ExpenseManager();
 
+    /**
+     * Initializes the History screen.
+     * Loads expenses from the database and distributes them
+     * into Today, Yesterday, and Older sections.
+     */
     @FXML
     public void initialize() {
         todayBox.getChildren().clear();
@@ -55,6 +64,12 @@ public class HistoryUI {
         }
     }
 
+    /**
+     * Creates a UI component representing a single expense.
+     *
+     * @param e expense object
+     * @return VBox containing styled expense data
+     */
     private VBox createItem(Expense e) {
         HBox row = new HBox(20);
 
@@ -79,30 +94,48 @@ public class HistoryUI {
         return box;
     }
 
+    /**
+     * Formats amount to include + or - sign.
+     */
     private String formatAmount(double amount) {
         return amount > 0 ? "+" + amount : "" + amount;
     }
 
+    /**
+     * Returns CSS style based on amount type (income or expense).
+     */
     private String getAmountStyle(double amount) {
         return amount > 0
                 ? "-fx-text-fill: green; -fx-font-weight: bold;"
                 : "-fx-text-fill: red; -fx-font-weight: bold;";
     }
 
+    /**
+     * Gets category name from category ID.
+     */
     private String getCategoryName(int id) {
         return com.example.masroofy_app.utils.CategoryUtils.getCategoryName(id);
     }
 
+    /**
+     * Navigates to Dashboard screen.
+     */
     @FXML
     private void goToDashboard(ActionEvent event) {
         SceneManager.switchScene("/view/DashboardUI.fxml");
     }
 
+    /**
+     * Navigates to Stats screen.
+     */
     @FXML
     private void goToStats(ActionEvent event) {
         SceneManager.switchScene("/view/StatsUI.fxml");
     }
 
+    /**
+     * Opens Settings screen.
+     */
     @FXML
     public void openSettings() {
         SceneManager.switchScene("/view/SettingsUI.fxml");

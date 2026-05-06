@@ -8,6 +8,11 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
+/**
+ * Controller class for the Setup screen.
+ * Responsible for creating and validating a new budget cycle,
+ * handling user input, and navigating to the dashboard after setup.
+ */
 public class SetupUI {
 
     @FXML
@@ -24,6 +29,14 @@ public class SetupUI {
 
     private BudgetCycle cycle;
 
+    /**
+     * Creates a BudgetCycle object from user input after validation.
+     *
+     * @param total the total budget amount entered by the user
+     * @param start the start date of the budget cycle
+     * @param end the end date of the budget cycle
+     * @return a valid BudgetCycle object if input is valid, otherwise null
+     */
     public BudgetCycle inputCycleData(double total, LocalDate start, LocalDate end) {
         if (!validateInput(total, start, end)) {
             return null;
@@ -31,10 +44,24 @@ public class SetupUI {
         return new BudgetCycle(0, total, start, end);
     }
 
+    /**
+     * Validates user input for the budget cycle.
+     *
+     * @param total the total budget amount
+     * @param start the start date
+     * @param end the end date
+     * @return true if input is valid, false otherwise
+     */
     public boolean validateInput(double total, LocalDate start, LocalDate end) {
         return total > 0 && start != null && end != null && !end.isBefore(start);
     }
 
+    /**
+     * Handles the start button action.
+     * Reads user input, validates it, saves the budget cycle to the database,
+     * and navigates to the Dashboard screen if successful.
+     * Displays error messages if validation or saving fails.
+     */
     @FXML
     public void handleStart() {
         try {
@@ -74,6 +101,11 @@ public class SetupUI {
         }
     }
 
+    /**
+     * Displays an error message on the UI or console if label is not available.
+     *
+     * @param message the error message to display
+     */
     private void showError(String message) {
         if (errorLabel != null) {
             errorLabel.setText(message);

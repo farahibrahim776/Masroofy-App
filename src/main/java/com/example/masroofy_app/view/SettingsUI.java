@@ -6,11 +6,22 @@ import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 
+/**
+ * Controller class for the Settings screen.
+ * Handles user settings such as privacy toggle, budget cycle reset,
+ * database reset, and navigation between different screens.
+ */
 public class SettingsUI {
 
     @FXML
     private CheckBox privacyCheck;
 
+    /**
+     * Initializes the Settings screen.
+     * Loads the current privacy setting from the database and binds it
+     * to the checkbox. Also listens for changes to update the database
+     * in real time.
+     */
     @FXML
     public void initialize() {
         boolean isEnabled = DatabaseHelper.getInstance().isPrivacyEnabled();
@@ -22,16 +33,28 @@ public class SettingsUI {
         });
     }
 
+    /**
+     * Navigates back to the Dashboard screen.
+     */
     @FXML
     public void goBack() {
         SceneManager.switchScene("/view/DashboardUI.fxml");
     }
 
+    /**
+     * Handles the action of managing categories.
+     * Currently prints a message to the console.
+     */
     @FXML
     public void handleManageCategories() {
         System.out.println("Manage Categories clicked");
     }
 
+    /**
+     * Resets the current budget cycle after user confirmation.
+     * Deactivates the existing cycle in the database and navigates
+     * the user to the setup screen to create a new cycle.
+     */
     @FXML
     public void handleResetCycle() {
         javafx.scene.control.Alert confirm = new javafx.scene.control.Alert(
@@ -50,11 +73,20 @@ public class SettingsUI {
         });
     }
 
+    /**
+     * Navigates the user to the PIN change (signup) screen.
+     */
     @FXML
     public void handleChangePIN() {
         SceneManager.switchScene("/view/PinUISignup.fxml");
     }
 
+    /**
+     * Resets the entire database after user confirmation.
+     * Deletes all stored data including expenses, budget cycles, and PIN.
+     * If successful, redirects the user to the PIN setup screen.
+     * Otherwise, shows an error message.
+     */
     @FXML
     public void handleResetDatabase() {
         javafx.scene.control.Alert confirm = new javafx.scene.control.Alert(
